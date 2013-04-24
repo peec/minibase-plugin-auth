@@ -48,7 +48,7 @@ class AuthRepository extends EntityRepository {
 		if ($user) {
 			$providers = $user->getProviders();
 			foreach($providers as $eProvider) {
-				if ($eProvider->getOauthProvider() === $oauthProvider) {
+				if ($eProvider->getOauthProvider() === $oauthProvider && $eProvider->getOauthUid() === $oauthUid) {
 					return $user;
 				}
 			}
