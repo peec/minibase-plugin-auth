@@ -1,0 +1,25 @@
+{
+    "name": "pkj/minibase-plugin-auth",
+    "type": "library",
+    "description": "The auth plugin implements authentication for your app.",
+    "homepage": "http://github.com/peec/minibase-plugin-auth",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Petter Kjelkenes",
+            "email": "kjelkenes@gmail.com",
+            "homepage": "http://pkj.no",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-0": {"Pkj\\Minibase\\Plugin\\AuthPlugin": "src/"}
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "minibase/minibase": "dev-master",
+        "pkj/minibase-plugin-doctrine": "dev-master",
+        "pkj/minibase-plugin-twig": "dev-master",
+        "facebook/php-sdk": "v3.2.2" 
+    }
+}

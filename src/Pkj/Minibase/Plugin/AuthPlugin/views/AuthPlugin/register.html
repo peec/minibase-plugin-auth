@@ -1,0 +1,23 @@
+{% extends "AuthPlugin/template.html" %}
+
+{% block content %}
+	<h2>Register</h2>
+	
+	
+	{% if authMessage %}
+		<p>{{authMessage.msg}}</p>
+	{% endif %}
+	
+	<form action="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.postRegister"|route()}}" method="post">
+		{{csrfTokenInput|raw}}
+		
+		<input type="text" name="username" placeholder="Email">
+		
+		<input type="password" name="password" placeholder="Password">
+		<input type="password" name="password_confirm" placeholder="Confirm Password">
+		
+		<button type="submit">Register</button>
+		
+	</form>
+	
+{% endblock %}

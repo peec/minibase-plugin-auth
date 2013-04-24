@@ -1,0 +1,30 @@
+{% extends "AuthPlugin/template.html" %}
+
+{% block content %}
+	<h2>Welcome {{currentUser.getUsername()}} 
+	(<a href="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.logout"|route()}}">Logout</a>)
+	</h2>
+	
+	
+	
+	<h4>Change password</h4>
+	
+	{% if passwordChangeMessage %}
+		<p>{{passwordChangeMessage.msg}}</p>
+	{% endif %}
+	
+	
+	<form action="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.changePassword"|route()}}" method="post">
+		{{csrfTokenInput|raw}}
+		
+		
+		<input type="password" name="old_password" placeholder="Old password"><br />
+		<input type="password" name="password" placeholder="New password"><br />
+		<input type="password" name="password_confirm" placeholder="Confirm password"><br />
+		
+		
+		<button type="submit">Save new password</button>
+		
+	</form>
+	
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "AuthPlugin/template.html" %}
+
+{% block content %}
+	<h2>Login</h2>
+	
+	
+	{% if authMessage %}
+		<p>{{authMessage.msg}}</p>
+	{% endif %}
+	
+	<form action="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.postLogin"|route()}}" method="post">
+		{{csrfTokenInput|raw}}
+		
+		<input type="text" name="username" placeholder="Email">
+		
+		<input type="password" name="password" placeholder="Password">
+		
+		<button type="submit">Login</button>
+		
+		
+	</form>
+	<ul>
+		<li><a href="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.oAuthLogin"|route("facebook")}}">Login with facebook</a></li>
+	</ul>
+	
+	<p>Don't got an account? <a href="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.register"|route()}}">Register for free!</a></p>
+	
+	
+	
+{% endblock %}

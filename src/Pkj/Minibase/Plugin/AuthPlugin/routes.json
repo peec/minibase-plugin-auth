@@ -1,0 +1,18 @@
+[
+	["get", "/login", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.login"],
+	["post", "/login", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.postLogin"],
+	
+	
+	["get", "/logout", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.logout"],
+	
+	["get", "/register", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.register"],
+	["post", "/register", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.postRegister"],
+
+	["get", "/settings/profile", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.manage"],
+	["post", "/settings/profile/password", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.changePassword"],
+	
+	
+	["get", "/login/oauth/([a-zA-Z_]*)", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.oAuthLogin"],
+	["get", "/login/oauth/facebook/callback", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.facebookCallback"]
+	
+]
