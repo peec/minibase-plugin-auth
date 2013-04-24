@@ -19,7 +19,7 @@ class AccountProvider {
 	private $oauthUid;
 	
 	/**
-	 * @ORM\ManyToOne(targetEntity="Pkj\Minibase\Plugin\AuthPlugin\Models\UserAccount", inversedBy="providers")
+	 * @ORM\ManyToOne(targetEntity="Pkj\Minibase\Plugin\AuthPlugin\Models\UserAccount", inversedBy="providers", cascade={"all"})
 	 * @ORM\JoinColumn(name="user_account_id", referencedColumnName="id")
 	 */
 	private $userAccount;
@@ -35,5 +35,9 @@ class AccountProvider {
 	}
 	public function getOauthUid () {
 		return $this->oauthUid;
+	}
+	
+	public function setUserAccount (UserAccount $userAccount) {
+		$this->userAccount = $userAccount;
 	}
 }

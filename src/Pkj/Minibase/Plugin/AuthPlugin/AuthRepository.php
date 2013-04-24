@@ -35,7 +35,8 @@ class AuthRepository extends EntityRepository {
 	
 	public function updateProvider ($oauthProvider, $oauthUid, $email) {
 		$query = $this->_em->createQuery("
-				SELECT u FROM Pkj\Minibase\Plugin\AuthPlugin\Models\UserAccount u
+				SELECT u, p FROM Pkj\Minibase\Plugin\AuthPlugin\Models\UserAccount u
+				LEFT JOIN u.providers p
 				WHERE u.username = ?1
 				");
 		$query->setParameter(1, $email);
@@ -53,7 +54,7 @@ class AuthRepository extends EntityRepository {
 			}
 			$createProvider = true;
 		} else {
-			$user = $this->register($email, null);
+			$user = $this->register($email, null, array(), true);
 			$createProvider = true;
 		}
 		
@@ -62,26 +63,28 @@ class AuthRepository extends EntityRepository {
 			$provider = new AccountProvider();
 			$provider->setOauthProvider($oauthProvider);
 			$provider->setOauthUid($oauthUid);
-			
-			$user->getProviders()->add($provider);
-			$this->_em->persist($provider);
+			$user->addProvider($provider);
 			$this->_em->persist($user);
-			$this->_em->flush();
+			$this->_em->flush($user);
 			
 			return $user;
 		}
 		
 	}
 	
-	public function register ($username, $password, array $fields = array()) {
+	public function register ($username, $password, array $fields = array(), $providerRegistration=false) {
 		$user = new UserAccount();
 		if (!$username) {
 			throw new \Exception("Username must be provided.");
 		}
-		
-		if ($password) {
-			$user->setPassword($password);
+		if (!$providerRegistration) {
+			if ($password) {
+				$user->setPassword($password);
+			} else {
+				throw new \Exception("Password must be set.");
+			}	
 		}
+		
 		
 		$user->setUsername($username);
 		

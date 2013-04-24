@@ -50,6 +50,10 @@ class UserAccount {
 	}
 	
 	
+	public function addProvider (AccountProvider $provider) {
+		$this->providers[] = $provider;
+		$provider->setUserAccount($this);
+	}
 	
 	public function setUsername ($username) {
 		$this->username = $username;

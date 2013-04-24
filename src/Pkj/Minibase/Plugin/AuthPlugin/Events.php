@@ -45,8 +45,15 @@ class Events extends EventCollection{
 			}
 		}else if ($annotation instanceof Restrict\NotAuthenticated) {
 			if ($this->plugin->getAuthenticatedUser() !== null) {
-				return $controller->respond("html")
-					->view("AuthPlugin/must_not_authenticate.html");
+				if ($annotation->redirect) {
+					$resp = $controller->respond("redirect")
+					->to($controller->call($annotation->redirect)->reverse());
+				} else {
+					$resp = $controller->respond("html")
+						->view("AuthPlugin/must_not_authenticate.html");
+					
+				}
+				return $resp;
 			}
 		}
 	}
