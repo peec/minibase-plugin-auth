@@ -41,6 +41,10 @@ class UserAccount {
 		$this->providers = new ArrayCollection();
 	}
 	
+	public function hasPasswordSet () {
+		return $this->password !== null;
+	}
+	
 	public function getId () {
 		return $this->id;
 	}

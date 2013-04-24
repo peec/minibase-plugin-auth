@@ -25,7 +25,7 @@ class AuthRepository extends EntityRepository {
 		
 		$user = $query->getOneOrNullResult();
 		
-		if ($user && $user->isPasswordCorrect($password)) {
+		if ($password && $user && $user->isPasswordCorrect($password)) {
 			
 			return $user;
 		} else {
@@ -112,7 +112,7 @@ class AuthRepository extends EntityRepository {
 	
 	
 	public function changePassword (UserAccount $u, $old, $new, $confirm) {
-		if (!$u->isPasswordCorrect($old)){
+		if ($u->hasPasswordSet() && !$u->isPasswordCorrect($old)){
 			throw new \Exception("Old password is incorrect.");
 		}
 		

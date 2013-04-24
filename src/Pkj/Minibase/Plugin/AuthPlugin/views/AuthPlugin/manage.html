@@ -17,8 +17,10 @@
 	<form action="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.changePassword"|route()}}" method="post">
 		{{csrfTokenInput|raw}}
 		
-		
+		{% if currentUser.hasPasswordSet() %}
 		<input type="password" name="old_password" placeholder="Old password"><br />
+		{% endif %}
+		
 		<input type="password" name="password" placeholder="New password"><br />
 		<input type="password" name="password_confirm" placeholder="Confirm password"><br />
 		
