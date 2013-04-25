@@ -115,6 +115,11 @@ The user must be authenticated, if not the view `AuthPlugin/must_authenticate.ht
 
 The user must NOT be authenticated, if this fails the view `AuthPlugin/must_not_authenticate.html` is displayed.
 
+#### @Restrict\UserGroups(groups={"admin"})
+
+You can restrict any controller or method to only some user groups.
+
+
 #### Annotation parameters
 
 
