@@ -37,8 +37,15 @@ class UserAccount {
 	 */
 	private $providers;
 	
+	/**
+	 * @ORM\ManyToMany(targetEntity="Pkj\Minibase\Plugin\AuthPlugin\Models\UserGroup")
+	 */
+	private $groups;
+	
+	
 	public function __construct () {
 		$this->providers = new ArrayCollection();
+		$this->groups = new ArrayCollection();
 	}
 	
 	public function hasPasswordSet () {
@@ -57,6 +64,13 @@ class UserAccount {
 	public function addProvider (AccountProvider $provider) {
 		$this->providers[] = $provider;
 		$provider->setUserAccount($this);
+	}
+	
+	public function addGroup (UserGroup $userGroup) {
+		$this->groups[] = $userGroup;
+	}
+	public function getGroups () {
+		return $this->groups;
 	}
 	
 	public function setUsername ($username) {

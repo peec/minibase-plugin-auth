@@ -31,31 +31,51 @@ class Events extends EventCollection{
 	 * @Annotation\Event("mb:call:execute:annotation")
 	 */
 	public function listenToAnnotations ($annotation, $controller) {
-		if ($annotation instanceof Restrict\Authenticated) {
-			if ($this->plugin->getAuthenticatedUser() === null) {
-				if ($annotation->redirect) {
-					
-					$resp = $controller->respond("redirect")
+		$resp = null;
+		
+		if ($annotation instanceof Restrict\UserGroups) {
+			$ok = false;
+			if ($this->mb->currentUser) {
+				$groups = $this->mb->currentUser->getGroups();
+				foreach($groups as $group) {
+					if (in_array($group->getIdentifier(), $annotation->groups)) {
+						$ok = true;
+						continue;
+					}
+				}
+			}
+			
+			if (!$ok) {
+				$resp = $controller->respond("html")
+					->view("AuthPlugin/not_enough_privelegies.html");
+			}
+			
+		} else if ($annotation instanceof Restrict\AuthAnnotation) {
+			
+			if ($annotation instanceof Restrict\Authenticated) {
+				if ($this->plugin->getAuthenticatedUser() === null) {
+					if ($annotation->redirect) {						
+						$resp = $controller->respond("redirect")
 						->to($controller->call($annotation->redirect)->reverse());
-				}else {
-					$resp = $controller->respond("html")
-					->view("AuthPlugin/must_authenticate.html");
+					}else {
+						$resp = $controller->respond("html")
+							->view("AuthPlugin/must_authenticate.html");
+					}
 				}
-				return $resp;
-			}
-		}else if ($annotation instanceof Restrict\NotAuthenticated) {
-			if ($this->plugin->getAuthenticatedUser() !== null) {
-				if ($annotation->redirect) {
-					$resp = $controller->respond("redirect")
-					->to($controller->call($annotation->redirect)->reverse());
-				} else {
-					$resp = $controller->respond("html")
-						->view("AuthPlugin/must_not_authenticate.html");
-					
+			}else if ($annotation instanceof Restrict\NotAuthenticated) {
+				if ($this->plugin->getAuthenticatedUser() !== null) {
+					if ($annotation->redirect) {
+						$resp = $controller->respond("redirect")
+						->to($controller->call($annotation->redirect)->reverse());
+					} else {
+						$resp = $controller->respond("html")
+						->view("AuthPlugin/must_not_authenticate.html");	
+					}
 				}
-				return $resp;
-			}
+			}	
 		}
+		
+		return $resp;
 	}
 	
 	/**

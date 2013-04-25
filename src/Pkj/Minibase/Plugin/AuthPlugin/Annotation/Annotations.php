@@ -1,10 +1,11 @@
 <?php
 namespace Pkj\Minibase\Plugin\AuthPlugin\Annotation;
 
+use Doctrine\Common\Annotations\Annotation as DoctrineAnnotation;
+
 abstract class AuthAnnotation {
 	public $redirect = null; // Redirects to specific location
-	public $saveCall = false; // Save the call and after redirect execute the call.
-	public $flash = null;
+
 }
 
 /**
@@ -12,7 +13,6 @@ abstract class AuthAnnotation {
  * @Annotation
  */
 class Authenticated extends AuthAnnotation{
-	public $redirectLogin = false; // redirects to login if not authenticated
 	
 }
 /**
@@ -21,4 +21,17 @@ class Authenticated extends AuthAnnotation{
  */
 class NotAuthenticated extends AuthAnnotation{
 	
+}
+/**
+ * User must be in one of the following groups.
+ * @Annotation
+ * @Attributes({
+		@Attribute("groups", required=true, type="array")
+   })
+ */
+class UserGroups {
+	/**
+	 * @var array
+	 */
+	public $groups;
 }
