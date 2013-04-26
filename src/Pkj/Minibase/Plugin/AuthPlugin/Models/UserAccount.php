@@ -115,6 +115,19 @@ class UserAccount {
 	}
 	
 	
+	/**
+	 * Checks if user is in a specific group
+	 * @param string $identifier The identifier of the group.
+	 */
+	public function hasGroup ($identifier) {
+		foreach($this->getGroups() as $group) {
+			if ($group->getIdentifier() === $identifier) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public function addProvider (AccountProvider $provider) {
 		$this->providers[] = $provider;
 		$provider->setUserAccount($this);
