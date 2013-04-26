@@ -1,6 +1,8 @@
 <?php
 namespace Pkj\Minibase\Plugin\AuthPlugin;
 
+use Pkj\Minibase\Plugin\AuthPlugin\Models\UserAccount;
+
 use Doctrine\Common\Annotations\AnnotationRegistry;
 
 use Minibase\Plugin\Plugin;
@@ -9,6 +11,20 @@ class AuthPlugin extends Plugin{
 	private $eventCollection;
 	
 	public $modelDir;
+	
+	public function defaultConfig () {
+		return array(
+			// Custom Providers login.
+			'providers' => array(),
+			// Default API settings.
+			'api' => array(
+				// Makes sure that the token is the same.
+				'ensure_token' => true,
+				// Sets a timeout of when token expires. Uses DateInterval
+				'expire_timeout' => false
+			)
+		);	
+	}
 	
 	public function setup () {
 		$this->modelDir = __DIR__ . '/Models';
@@ -45,7 +61,9 @@ class AuthPlugin extends Plugin{
 			$userid = $that->getAuthenticatedUser();
 			if ($userid === null) {
 				return null;
-			} else {
+			} else if (is_object($userid) && $userid instanceof UserAccount) {
+				return $userid;
+			}else {
 				return $that->getRepo()->findOneById($userid);
 			}
 		});
@@ -58,7 +76,9 @@ class AuthPlugin extends Plugin{
 	 * @return Pkj\Minibase\Plugin\AuthPlugin\AuthRepository The repository for user.
 	 */
 	public function getRepo () {
-		return $this->mb->em->getRepository('Pkj\Minibase\Plugin\AuthPlugin\Models\UserAccount');
+		$repo = $this->mb->em->getRepository('Pkj\Minibase\Plugin\AuthPlugin\Models\UserAccount');
+		$repo->setPluginConfig($this->config);
+		return $repo;
 	}
 	
 	public function start () {
@@ -71,7 +91,9 @@ class AuthPlugin extends Plugin{
 	public function getAuthenticatedUser () {
 		if (isset($_SESSION['userAccount']) && $_SESSION['userAccount']) {
 			return $_SESSION['userAccount'];
-		} else {
+		} elseif (isset($_GET['auth_token'])) {
+			return $this->getRepo()->findOneByAuthToken($_GET['auth_token']);
+		}else {
 			return null;
 		}
 	}

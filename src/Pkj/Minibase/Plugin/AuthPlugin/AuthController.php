@@ -38,6 +38,7 @@ class AuthController extends Controller {
 		
 		if ($user) {
 			$_SESSION['userAccount'] = $user->getId();
+			
 			return $this->respond("redirect")
 				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.manage')->reverse());
 		} else {

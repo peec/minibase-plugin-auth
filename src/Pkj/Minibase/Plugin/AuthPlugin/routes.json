@@ -13,6 +13,12 @@
 	
 	
 	["get", "/login/oauth/([a-zA-Z_]*)", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.oAuthLogin"],
-	["get", "/login/oauth/facebook/callback", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.facebookCallback"]
+	["get", "/login/oauth/facebook/callback", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.facebookCallback"],
+	
+	
+	
+	["post", "/api/login", "Pkj/Minibase/Plugin/AuthPlugin/ApiAuthController.login"],
+	["register", "/api/register", "Pkj/Minibase/Plugin/AuthPlugin/ApiAuthController.register"]
+	
 	
 ]

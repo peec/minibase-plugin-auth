@@ -8,8 +8,18 @@ use Pkj\Minibase\Plugin\AuthPlugin\Models\UserAccount;
 use Doctrine\ORM\EntityRepository;
 
 
-
+/**
+ * 
+ * @author peec
+ *
+ */
 class AuthRepository extends EntityRepository {
+	
+	private $pluginConfig;
+	
+	public function setPluginConfig (array $pluginConfig) {
+		$this->pluginConfig = $pluginConfig;
+	}
 	
 	/**
 	 * Returns entity (object) if successful, else NULL
@@ -25,8 +35,25 @@ class AuthRepository extends EntityRepository {
 		
 		$user = $query->getOneOrNullResult();
 		
+		$apiConfig = $this->pluginConfig['api'];
+		
 		if ($password && $user && $user->isPasswordCorrect($password)) {
 			
+			if (!$user->getAuthToken() || !$apiConfig['ensure_token']) {
+				$user->generateAuthToken();
+			}
+			// If configured to set a timeout, lets set it.
+			if ($apiConfig['expire_timeout']) {
+				$expire = new \DateTime("now");
+				$expire->add(\DateInterval::createFromDateString($apiConfig['expire_timeout']));
+				$user->setAuthTokenExpire($expire);
+			} else {
+				$user->setAuthTokenExpire(null);
+			}
+			
+			
+			$this->_em->persist($user);
+			$this->_em->flush($user);
 			return $user;
 		} else {
 			return null;
