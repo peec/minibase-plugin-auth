@@ -40,7 +40,8 @@ class AuthController extends Controller {
 			$_SESSION['userAccount'] = $user->getId();
 			
 			return $this->respond("redirect")
-				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.manage')->reverse());
+				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.manage')->reverse())
+				->flash(array("success" => "Welcome {$user->getUsername()}."));
 		} else {
 			return $this->respond("html")
 				->view("AuthPlugin/login.html", array("authMessage" => array('msg' => 'Invalid login credentials.')));
