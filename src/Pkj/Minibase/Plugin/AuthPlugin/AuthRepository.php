@@ -91,7 +91,7 @@ class AuthRepository extends EntityRepository {
 			}
 			$createProvider = true;
 		} else {
-			$user = $this->register($email, null, array(), true);
+			$user = $this->register($email, null, null, true);
 			$createProvider = true;
 		}
 		
