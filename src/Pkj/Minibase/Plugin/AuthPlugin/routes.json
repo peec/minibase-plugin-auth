@@ -18,7 +18,7 @@
 	
 	
 	["post", "/api/login", "Pkj/Minibase/Plugin/AuthPlugin/ApiAuthController.login"],
-	["register", "/api/register", "Pkj/Minibase/Plugin/AuthPlugin/ApiAuthController.register"]
+	["post", "/api/register", "Pkj/Minibase/Plugin/AuthPlugin/ApiAuthController.register"]
 	
 	
 ]

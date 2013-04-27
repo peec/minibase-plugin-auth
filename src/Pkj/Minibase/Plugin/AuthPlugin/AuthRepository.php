@@ -1,6 +1,8 @@
 <?php
 namespace Pkj\Minibase\Plugin\AuthPlugin;
 
+use Minibase\Wreqr\EventBinder;
+
 use Pkj\Minibase\Plugin\AuthPlugin\Models\AccountProvider;
 
 use Pkj\Minibase\Plugin\AuthPlugin\Models\UserAccount;
@@ -16,9 +18,14 @@ use Doctrine\ORM\EntityRepository;
 class AuthRepository extends EntityRepository {
 	
 	private $pluginConfig;
+	private $events;
 	
 	public function setPluginConfig (array $pluginConfig) {
 		$this->pluginConfig = $pluginConfig;
+	}
+	
+	public function setEvents (EventBinder $events) {
+		$this->events = $events;
 	}
 	
 	/**
@@ -51,9 +58,12 @@ class AuthRepository extends EntityRepository {
 				$user->setAuthTokenExpire(null);
 			}
 			
+			$this->events->trigger('auth:login:before', array($user));
 			
 			$this->_em->persist($user);
 			$this->_em->flush($user);
+			
+			$this->events->trigger('auth:login:after', array($user));
 			return $user;
 		} else {
 			return null;
@@ -99,40 +109,45 @@ class AuthRepository extends EntityRepository {
 		
 	}
 	
-	public function register ($username, $password, array $fields = array(), $providerRegistration=false) {
+	public function userExists ($username) {
+		return $this->findOneByUsername($username);
+	}
+	
+	
+	public function register ($username, $password, $password_confirm, $providerRegistration=false) {
 		$user = new UserAccount();
 		if (!$username) {
 			throw new \Exception("Username must be provided.");
 		}
+		
+		if ($this->userExists($username)) {
+			throw new \Exception("Username already registered.");
+		}
+		
 		if (!$providerRegistration) {
+			if ($password_confirm != $password) {
+				throw new \Exception("Password confirmation is incorrect.");
+			}
 			if ($password) {
 				$user->setPassword($password);
 			} else {
 				throw new \Exception("Password must be set.");
-			}	
+			}
 		}
 		
 		
 		$user->setUsername($username);
 		
-		if (!empty($fields)) {
-			
-			$ref = new \ReflectionObject($user);
-			foreach($fields as $k => $v) {
-				$setter = 'set' . ucfirst($k);
-				if (method_exists($user, $setter)) {
-					$user->$setter($v);
-				} else {
-					$prop = $ref->getProperty($k);
-					$prop->setAccessible(true);
-					$prop->setValue($user, $v);
-				}
-			}
-			
+		if (!$providerRegistration) {
+			$this->events->trigger('auth:register:before', array($user));
 		}
 		
 		$this->_em->persist($user);
 		$this->_em->flush($user);
+		
+		if (!$providerRegistration) {
+			$this->events->trigger('auth:register:after', array($user));
+		}
 		return $user;
 	}
 	
@@ -150,6 +165,8 @@ class AuthRepository extends EntityRepository {
 		$u->setPassword($new);
 		$this->_em->persist($u);
 		$this->_em->flush($u);
+		
+		return $u;
 	}
 	
 	

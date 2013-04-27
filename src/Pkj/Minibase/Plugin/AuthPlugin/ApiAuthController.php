@@ -60,5 +60,43 @@ class ApiAuthController extends Controller {
 		}
 	}
 	
+	public function register () {
+		$data = $this->request->json();
+		
+		if (!isset($data->username) || !isset($data->password) || !isset($data->password_confirm)) {
+			return $this->respond("json")
+				->data([
+					"error" => "username, password and password_confirm must be provided."
+				])
+				->with(400);
+		}
+		
+		
+		$username = $data->username;
+		$password = $data->password;
+		$password_confirm = $data->password_confirm;
+		
+		
+		try {
+			$user = $this->getPlugin()->getRepo()->register($username, $password, $password_confirm);
+			return $this->respond("json")
+			->data([
+					"success" => "Registered new user account.", 
+					"user" => array(
+							"id" => $user->getId(),
+							"username" => $user->getUsername()
+							)
+					]);
+		} catch (\Exception $e) {
+			return $this->respond("json")
+			->data([
+					"error" => $e->getMessage()
+					])
+					->with(400);
+		}
+		
+		
+	}
+	
 	
 }

@@ -136,11 +136,12 @@ class AuthController extends Controller {
 	public function postRegister () {
 		$username = $_POST['username'];
 		$password = $_POST['password'];
+		$password_confirm = $_POST['password_confirm'];
 		
 		$fields = array();
-		$this->mb->events->trigger("plugin:AuthPlugin:register:customfields", array(&$fields));
 		try {
-			$this->getPlugin()->getRepo()->register($username, $password, $fields);
+			$user = $this->getPlugin()->getRepo()->register($username, $password, $password_confirm);
+			
 			
 			return $this->respond("redirect")
 				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.login')->reverse())

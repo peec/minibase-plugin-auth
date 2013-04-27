@@ -73,11 +73,12 @@ class AuthPlugin extends Plugin{
 	
 	
 	/**
-	 * @return Pkj\Minibase\Plugin\AuthPlugin\AuthRepository The repository for user.
+	 * @return Pkj\Minibase\Plugin\AuthPlugin\AuthRepository
 	 */
 	public function getRepo () {
 		$repo = $this->mb->em->getRepository('Pkj\Minibase\Plugin\AuthPlugin\Models\UserAccount');
 		$repo->setPluginConfig($this->config);
+		$repo->setEvents($this->mb->events);
 		return $repo;
 	}
 	
