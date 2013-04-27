@@ -8,6 +8,7 @@ for you app look no further. This plugin is cuztomizable, such as the [View cust
 
 - Normal email/password auth.
 - Facebook Oauth login.
+- API Authentication (for your resful apis)
 
 ## Plugin requirements
 
@@ -125,6 +126,12 @@ You can restrict any controller or method to only some user groups.
 
 The `redirect` parameter (eg. `@Restrict\Authenticate(redirect="MyController.heyloginnowplease")` will redirect the user instead 
 of showing the `AuthPlugin/must_authenticate.html`.
+
+
+
+## API Authentication
+
+This plugin aquires some other routes, such as `/api/login` . These calls expects a raw JSON request. the `/api/login` entry point gives you some data back if the posted json was correct, ie. `{"username": "myuser", "password": "mypass"}`. You will get a `authToken` back, this key can be used to authenticate further when needed. You just need to add `?auth_token=KEY` to the URL and you will get access depending on the annotations that was assigned to the entry point.
 
 
 
