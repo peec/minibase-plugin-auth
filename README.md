@@ -134,5 +134,17 @@ of showing the `AuthPlugin/must_authenticate.html`.
 This plugin aquires some other routes, such as `/api/login` . These calls expects a raw JSON request. the `/api/login` entry point gives you some data back if the posted json was correct, ie. `{"username": "myuser", "password": "mypass"}`. You will get a `authToken` back, this key can be used to authenticate further when needed. You just need to add `?auth_token=KEY` to the URL and you will get access depending on the annotations that was assigned to the entry point.
 
 
+## Events
+
+
+#### auth:register:before (Pkj\Minibase\Plugin\AuthPlugin\Models\UserAccount $user)
+
+Fires just before the user is persisted to the database. Useful for custom validation of both username and your own fields. Throw `\Exception` if you want not to persist the user to the database.
+
+#### auth:register:after (Pkj\Minibase\Plugin\AuthPlugin\Models\UserAccount $user)
+
+Fires on registration (not provider registration). Allows you to add custom fields to your database when a user is registered. 
+
+
 
 
