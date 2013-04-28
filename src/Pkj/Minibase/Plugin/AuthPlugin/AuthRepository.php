@@ -164,6 +164,15 @@ class AuthRepository extends EntityRepository {
 			throw new \Exception ("User does not exist.");
 		}
 		
+		if (!$user->hasPasswordSet()) {
+			$providers = $user->getProviders();
+			$provStrings = '';
+			foreach($providers as $provider) {
+				$provStrings .= $provider->getOauthProvider() . ', ';
+			}
+			throw new \Exception("Your account has no password because you have used other login providers and not set a password. Login with one of $provStrings.");
+		}
+		
 		if (!$user->getForgotPasswordKey()) {
 			$user->generateForgotPasswordKey();
 			
