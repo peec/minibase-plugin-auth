@@ -183,4 +183,51 @@ class AuthController extends Controller {
 	}
 	
 	
+	public function recoverAccount () {
+		return $this->respond("html")
+			->view("AuthPlugin/recover_account.html");
+	}
+	
+	
+	public function postRecoverAccount () {
+		$email = $_POST['email'];
+		
+		try {
+			$user = $this->getPlugin()->getRepo()->accquireResetPassword($email);
+			
+			$link = $this->request->domain . $this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.resetPassword')->reverse() . '?reskey='. $user->getForgotPasswordKey();
+			$fromEmail = $this->mb->get('Pkj\Minibase\Plugin\MailerPlugin\MailerPlugin')->cfg('defaultFromEmail', $this->getPlugin()->cfg('fromEmail'));
+			
+			$message = \Swift_Message::newInstance()
+				->setFrom($fromEmail)
+				->setTo($email)
+				->setSubject('Password recovery')
+				->setBody($this->renderView('AuthPlugin/Mail/forgot_password.twig', array(
+						'user' => $user,
+						'reset_link' => $link
+						)));
+			
+			$this->mb->mailer->send($message);
+			
+			return $this->respond("redirect")
+				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.recoverAccount')->reverse())
+				->flash(array('success' => 'Please check your email, we have sent instructions on how to reset your password.'));
+		} catch (\Exception $e) {
+			return $this->respond("html")
+				->view("AuthPlugin/recover_account.html", array('recoverMessage' => array('msg' => $e->getMessage())));
+		}
+		
+		
+	}
+	
+	
+	public function resetPassword () {
+		if (!isset($_GET['reskey'])) {
+			
+		}
+		$key = $_GET['reskey'];
+		
+	}
+	
+	
 }

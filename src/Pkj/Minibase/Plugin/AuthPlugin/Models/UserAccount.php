@@ -157,6 +157,24 @@ class UserAccount {
 	}
 	
 	
+	public function getForgotPasswordKey () {
+		return $this->forgotPasswordKey;
+	}
+	
+	public function generateForgotPasswordKey () {
+		$this->forgotPasswordKey = sha1(uniqid(rand(), true) . $this->id);
+	}
+	
+	public function isForgotPasswordKeyValid ($forgotPasswordKey) {
+		if ($this->forgotPasswordKey === null) return false;
+		
+		return $this->forgotPasswordKey === $forgotPasswordKey;
+	}
+	
+	public function removeForgotPasswordKey () {
+		$this->forgotPasswordKey = null;
+	}
+	
 	
 	
 	

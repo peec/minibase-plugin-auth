@@ -4,6 +4,13 @@
 		<title>Authentication</title>
 	</head>
 	<body>
+		{% if flash.success %}
+			<div style="border: 1px solid black; padding: 10px; background: #A9F5A9; margin: 5px 0 5px;">
+				{{flash.success}}
+			</div>
+		{% endif %}
+			
+	
 		{% block content %}{% endblock content %}
 	</body>
 </html>

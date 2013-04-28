@@ -19,7 +19,9 @@
         "php": ">=5.4.0",
         "minibase/minibase": "dev-master",
         "pkj/minibase-plugin-doctrine": "dev-master",
+        "doctrine/migrations": "dev-master",
         "pkj/minibase-plugin-twig": "dev-master",
-        "facebook/php-sdk": "v3.2.2" 
+        "pkj/minibase-plugin-mailer": "dev-master",
+        "facebook/php-sdk": "3.*" 
     }
 }

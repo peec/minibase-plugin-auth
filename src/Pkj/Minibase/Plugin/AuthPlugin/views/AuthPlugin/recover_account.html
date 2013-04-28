@@ -1,0 +1,24 @@
+{% extends "AuthPlugin/template.html" %}
+
+{% block content %}
+	<h2>Account recovery</h2>
+	
+	<p>Did you forget your password? Reset your password here.</p>
+	
+	
+	{% if recoverMessage %}
+		<p>{{recoverMessage.msg}}</p>
+	{% endif %}
+	
+	
+	<form action="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.postRecoverAccount"|route()}}" method="post">
+		{{csrfTokenInput|raw}}
+		
+		<input type="text" name="email" placeholder="Your email" />
+		
+		<button type="submit">Reset password</button>
+		
+	</form>
+	
+	
+{% endblock %}

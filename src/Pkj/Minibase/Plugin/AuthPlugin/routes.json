@@ -15,6 +15,10 @@
 	["get", "/login/oauth/([a-zA-Z_]*)", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.oAuthLogin"],
 	["get", "/login/oauth/facebook/callback", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.facebookCallback"],
 	
+	["get", "/user/recover", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.recoverAccount"],
+	["post", "/user/recover", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.postRecoverAccount"],
+	["get", "/user/recover/reset", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.resetPassword"],
+	
 	
 	
 	["post", "/api/login", "Pkj/Minibase/Plugin/AuthPlugin/ApiAuthController.login"],

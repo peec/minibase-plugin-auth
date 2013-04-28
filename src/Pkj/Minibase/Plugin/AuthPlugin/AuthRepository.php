@@ -109,6 +109,11 @@ class AuthRepository extends EntityRepository {
 		
 	}
 	
+	/**
+	 * Checks if a user exists, if it does it returns the user.
+	 * @param string $username Email / Username.
+	 * @return Pkj\Minibase\Plugin\AuthPlugin\Models\UserAccount
+	 */
 	public function userExists ($username) {
 		return $this->findOneByUsername($username);
 	}
@@ -152,6 +157,21 @@ class AuthRepository extends EntityRepository {
 	}
 	
 	
+	public function accquireResetPassword ($email) {
+
+		$user = $this->userExists($email);
+		if (!$user) {
+			throw new \Exception ("User does not exist.");
+		}
+		
+		if (!$user->getForgotPasswordKey()) {
+			$user->generateForgotPasswordKey();
+			
+			$this->_em->persist($user);
+			$this->_em->flush($user);
+		}
+		return $user;
+	}
 	
 	public function changePassword (UserAccount $u, $old, $new, $confirm) {
 		if ($u->hasPasswordSet() && !$u->isPasswordCorrect($old)){
