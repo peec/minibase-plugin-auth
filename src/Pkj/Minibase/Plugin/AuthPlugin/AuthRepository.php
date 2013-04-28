@@ -199,4 +199,28 @@ class AuthRepository extends EntityRepository {
 	}
 	
 	
+	/**
+	 * Validates a reset key, if it validres auth_token is created if not already there.
+	 * @param unknown_type $key
+	 * @throws \Exception
+	 */
+	public function validateResetKey ($key) {
+		$user = $this->findOneByForgotPasswordKey($key);
+		if (!$user) {
+			throw new \Exception ("Could not validate the password reset key.");
+		}
+		
+		
+		if (!$user->getAuthToken()) {
+			$user->generateAuthToken();
+		}
+		$user->setAuthTokenExpire(null);
+		
+		
+		$this->_em->persist($user);
+		$this->_em->flush($user);
+		
+		return $user;
+	}
+	
 }

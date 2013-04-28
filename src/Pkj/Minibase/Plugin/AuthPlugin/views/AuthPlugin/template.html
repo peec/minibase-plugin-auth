@@ -9,7 +9,13 @@
 				{{flash.success}}
 			</div>
 		{% endif %}
+		{% if flash.error %}
+			<div style="border: 1px solid black; padding: 10px; background: #F5A9A9; margin: 5px 0 5px;">
+				{{flash.error}}
+			</div>
+		{% endif %}
 			
+		
 	
 		{% block content %}{% endblock content %}
 	</body>

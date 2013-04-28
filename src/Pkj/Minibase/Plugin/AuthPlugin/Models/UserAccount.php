@@ -61,6 +61,11 @@ class UserAccount {
 		return $this->password !== null;
 	}
 	
+	public function removePassword () {
+		$this->password = null;
+		$this->salt = null;
+	}
+	
 	public function getId () {
 		return $this->id;
 	}
@@ -75,7 +80,7 @@ class UserAccount {
 	public function generateAuthToken () {
 		$this->authToken = sha1(uniqid(rand(), true) . $this->id);
 	}
-	public function setAuthTokenExpire (\DateTime $date) {
+	public function setAuthTokenExpire (\DateTime $date = null) {
 		$this->authTokenExpire = $date;
 	}
 	public function getAuthTokenExpire () {

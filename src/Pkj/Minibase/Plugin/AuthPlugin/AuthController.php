@@ -222,11 +222,53 @@ class AuthController extends Controller {
 	
 	
 	public function resetPassword () {
-		if (!isset($_GET['reskey'])) {
-			
-		}
-		$key = $_GET['reskey'];
 		
+		
+		try {
+			
+			if (!isset($_GET['reskey'])) {
+				throw new \Exception("No reset key defined. Please try again.");	
+			}
+			$key = $_GET['reskey'];
+		
+			$user = $this->getPlugin()->getRepo()->validateResetKey($key);
+			
+			
+			$link = $this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.postResetPassword')->reverse() . '?auth_token=' . $user->getAuthToken();
+			
+			return $this->respond("html")
+				->view("AuthPlugin/reset_password.html", array(
+						'user' => $user,
+						'resetPasswordPostLink' => $link));
+		} catch(\Exception $e) {
+			return $this->respond("redirect")
+				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.recoverAccount')->reverse())
+				->flash(array('error' => 'We could not validate the password-reset code. Please try again.'));
+		}
+		
+	}
+	
+	/**
+	 * @Restrict\Authenticated
+	 */
+	public function postResetPassword () {
+		$password = $_POST['password'];
+		$password_confirm = $_POST['password_confirm'];
+		try {
+			// Validate the current token.
+			$user = $this->getPlugin()->getRepo()->validateResetKey($this->currentUser->getForgotPasswordKey());
+			// Remove the old passwords.
+			$user->removePassword();
+			// Change the password
+			$this->getPlugin()->getRepo()->changePassword($user, null, $password, $password_confirm);
+			
+			return $this->respond("redirect")
+				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.login')->reverse())
+				->flash(array('success' => 'Your password has been reset, you may now login with your new password.'));
+		} catch(\Exception $e) {
+			return $this->respond("html")
+			->view("AuthPlugin/reset_password.html", array('recoverMessage' => array('msg' => $e->getMessage())));
+		}
 	}
 	
 	

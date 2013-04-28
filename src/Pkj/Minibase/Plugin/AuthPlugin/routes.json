@@ -18,6 +18,7 @@
 	["get", "/user/recover", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.recoverAccount"],
 	["post", "/user/recover", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.postRecoverAccount"],
 	["get", "/user/recover/reset", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.resetPassword"],
+	["post", "/user/recover/reset", "Pkj/Minibase/Plugin/AuthPlugin/AuthController.postResetPassword"],
 	
 	
 	
