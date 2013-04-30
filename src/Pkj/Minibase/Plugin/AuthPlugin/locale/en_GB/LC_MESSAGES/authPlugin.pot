@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-30 03:39+0200\n"
+"POT-Creation-Date: 2013-04-30 04:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -11,6 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/manage.html:4
 msgid "Welcome %s."
 msgstr ""
 
@@ -66,5 +67,121 @@ msgid "The password confirmation was incorrect."
 msgstr ""
 
 msgid "Could not validate the password reset key."
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/Mail/forgot_password.twig:1
+#, php-format
+msgid "Hi %s"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/Mail/forgot_password.twig:3
+msgid "You recently asked to reset your password. To complete your request, please follow this link:"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/Mail/forgot_password.twig:8
+msgid "*Didn't request this change?*"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/Mail/forgot_password.twig:10
+msgid "If you did not request a new password, please ignore this email."
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/register.html:4
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/register.html:19
+msgid "Register"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/register.html:14
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/login.html:14
+msgid "Email"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/register.html:16
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/login.html:16
+msgid "Password"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/register.html:17
+msgid "Confirm Password"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/template.html:4
+msgid "Autentication"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/must_not_authenticate.html:4
+msgid "You must not be authenticated to use this action."
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/must_authenticate.html:4
+msgid "You must be authenticated."
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/recover_account.html:4
+msgid "Account recovery"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/recover_account.html:6
+msgid "Did you forget your password? Reset your password here."
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/recover_account.html:17
+msgid "Your email"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/recover_account.html:19
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/reset_password.html:20
+msgid "Reset password"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/manage.html:5
+msgid "Logout"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/manage.html:10
+msgid "Change password"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/manage.html:21
+msgid "Old password"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/manage.html:24
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/reset_password.html:16
+msgid "New password"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/manage.html:25
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/reset_password.html:17
+msgid "Confirm password"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/manage.html:28
+msgid "Save new password"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/login.html:4
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/login.html:18
+msgid "Login"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/login.html:26
+msgid "Don't got an account?"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/login.html:26
+msgid "Register now!"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/login.html:27
+msgid "Did you forget your password?"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/login.html:27
+msgid "Proceed to account recovery"
+msgstr ""
+
+#: /home/peec/workspace/minibase-plugin-auth/src/Pkj/Minibase/Plugin/AuthPlugin/views/AuthPlugin/reset_password.html:4
+msgid "Reset your password"
 msgstr ""
 

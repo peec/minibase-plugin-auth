@@ -1,7 +1,7 @@
 {% extends "AuthPlugin/template.html" %}
 
 {% block content %}
-	<h2>Login</h2>
+	<h2>{{"Login"|_d("authPlugin")}}</h2>
 	
 	
 	{% if authMessage %}
@@ -11,11 +11,11 @@
 	<form action="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.postLogin"|route()}}" method="post">
 		{{csrfTokenInput|raw}}
 		
-		<input type="text" name="username" placeholder="Email">
+		<input type="text" name="username" placeholder="{{"Email"|_d("authPlugin")}}">
 		
-		<input type="password" name="password" placeholder="Password">
+		<input type="password" name="password" placeholder="{{"Password"|_d("authPlugin")}}">
 		
-		<button type="submit">Login</button>
+		<button type="submit">{{"Login"|_d("authPlugin")}}</button>
 		
 		
 	</form>
@@ -23,8 +23,8 @@
 		<li><a href="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.oAuthLogin"|route("facebook")}}">Login with facebook</a></li>
 	</ul>
 	
-	<p>Don't got an account? <a href="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.register"|route()}}">Register for free!</a></p>
-	<p>Did you forget your password? <a href="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.recoverAccount"|route()}}">Proceed to account recovery</a></p>
+	<p>{{"Don't got an account?"|_d("authPlugin")}} <a href="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.register"|route()}}">{{"Register now!"|_d("authPlugin")}}</a></p>
+	<p>{{"Did you forget your password?"|_d("authPlugin")}} <a href="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.recoverAccount"|route()}}">{{"Proceed to account recovery"|_d("authPlugin")}}</a></p>
 	
 	
 {% endblock %}

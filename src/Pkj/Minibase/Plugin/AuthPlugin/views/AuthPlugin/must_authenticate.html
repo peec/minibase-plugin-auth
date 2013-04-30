@@ -1,5 +1,5 @@
 {% extends "AuthPlugin/template.html" %}
 
 {% block content %}
-	<p>You must be authenticated.</p>
+	<p>{{"You must be authenticated."|_d("authPlugin")}}</p>
 {% endblock %}

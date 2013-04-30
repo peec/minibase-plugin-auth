@@ -1,13 +1,13 @@
 {% extends "AuthPlugin/template.html" %}
 
 {% block content %}
-	<h2>Welcome {{currentUser.getUsername()}} 
-	(<a href="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.logout"|route()}}">Logout</a>)
+	<h2>{{"Welcome %s."|_d("authPlugin")|format(currentUser.getUsername())}} 
+	(<a href="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.logout"|route()}}">{{"Logout"|_d("authPlugin")}}</a>)
 	</h2>
 	
 	
 	
-	<h4>Change password</h4>
+	<h4>{{"Change password"|_d("authPlugin")}}</h4>
 	
 	{% if passwordChangeMessage %}
 		<p>{{passwordChangeMessage.msg}}</p>
@@ -18,14 +18,14 @@
 		{{csrfTokenInput|raw}}
 		
 		{% if currentUser.hasPasswordSet() %}
-		<input type="password" name="old_password" placeholder="Old password"><br />
+		<input type="password" name="old_password" placeholder="{{"Old password"|_d("authPlugin")}}"><br />
 		{% endif %}
 		
-		<input type="password" name="password" placeholder="New password"><br />
-		<input type="password" name="password_confirm" placeholder="Confirm password"><br />
+		<input type="password" name="password" placeholder="{{"New password"|_d("authPlugin")}}"><br />
+		<input type="password" name="password_confirm" placeholder="{{"Confirm password"|_d("authPlugin")}}"><br />
 		
 		
-		<button type="submit">Save new password</button>
+		<button type="submit">{{"Save new password"|_d("authPlugin")}}</button>
 		
 	</form>
 	

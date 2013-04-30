@@ -1,5 +1,5 @@
 {% extends "AuthPlugin/template.html" %}
 
 {% block content %}
-	<p>You must not be authenticated to use this action.</p>
+	<p>{{"You must not be authenticated to use this action."|_d("authPlugin")}}</p>
 {% endblock %}
