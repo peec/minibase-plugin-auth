@@ -1,0 +1,70 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-04-30 03:39+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Welcome %s."
+msgstr ""
+
+msgid "Invalid login credentials."
+msgstr ""
+
+msgid "You are logged out. Welcome back."
+msgstr ""
+
+msgid "Thank you for creating an account. You may login."
+msgstr ""
+
+msgid "Your password has been changed."
+msgstr ""
+
+msgid "Password recovery"
+msgstr ""
+
+msgid "Please check your email, we have sent instructions on how to reset your password."
+msgstr ""
+
+msgid "No reset key defined. Please try again."
+msgstr ""
+
+msgid "We could not validate the password-reset code. Please try again."
+msgstr ""
+
+msgid "Your password has been reset, you may now login with your new password."
+msgstr ""
+
+msgid "Username must be provided."
+msgstr ""
+
+msgid "Username already registered."
+msgstr ""
+
+msgid "Password confirmation is incorrect."
+msgstr ""
+
+msgid "Password must be set."
+msgstr ""
+
+msgid "User does not exist."
+msgstr ""
+
+msgid "Your account has no password because you have used other login providers and not set a password. Login with one of %s."
+msgstr ""
+
+msgid "Old password is incorrect."
+msgstr ""
+
+msgid "The password confirmation was incorrect."
+msgstr ""
+
+msgid "Could not validate the password reset key."
+msgstr ""
+

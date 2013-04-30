@@ -8,6 +8,9 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 use Minibase\Plugin\Plugin;
 
 class AuthPlugin extends Plugin{
+	
+	const DOMAIN_NAME = 'authPlugin';
+	
 	private $eventCollection;
 	
 	public $modelDir;
@@ -68,6 +71,13 @@ class AuthPlugin extends Plugin{
 			}
 		});
 		
+		$this->mb->trans->load(
+				self::DOMAIN_NAME, 
+				__DIR__ . '/locale',
+				'en_GB',
+				array('php:' . __DIR__, 
+						'twig:'. __DIR__ . '/views'
+						));
 		
 	}
 	
@@ -79,6 +89,7 @@ class AuthPlugin extends Plugin{
 		$repo = $this->mb->em->getRepository('Pkj\Minibase\Plugin\AuthPlugin\Models\UserAccount');
 		$repo->setPluginConfig($this->config);
 		$repo->setEvents($this->mb->events);
+		$repo->setTrans($this->mb->trans);
 		return $repo;
 	}
 	

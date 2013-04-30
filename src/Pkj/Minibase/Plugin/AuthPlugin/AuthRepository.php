@@ -19,6 +19,7 @@ class AuthRepository extends EntityRepository {
 	
 	private $pluginConfig;
 	private $events;
+	private $trans;
 	
 	public function setPluginConfig (array $pluginConfig) {
 		$this->pluginConfig = $pluginConfig;
@@ -26,6 +27,10 @@ class AuthRepository extends EntityRepository {
 	
 	public function setEvents (EventBinder $events) {
 		$this->events = $events;
+	}
+	
+	public function setTrans ($trans) {
+		$this->trans = $trans;
 	}
 	
 	/**
@@ -122,21 +127,21 @@ class AuthRepository extends EntityRepository {
 	public function register ($username, $password, $password_confirm, $providerRegistration=false) {
 		$user = new UserAccount();
 		if (!$username) {
-			throw new \Exception("Username must be provided.");
+			throw new \Exception(dgettext("authPlugin", "Username must be provided."));
 		}
 		
 		if ($this->userExists($username)) {
-			throw new \Exception("Username already registered.");
+			throw new \Exception(dgettext("authPlugin", "Username already registered."));
 		}
 		
 		if (!$providerRegistration) {
 			if ($password_confirm != $password) {
-				throw new \Exception("Password confirmation is incorrect.");
+				throw new \Exception(dgettext("authPlugin", "Password confirmation is incorrect."));
 			}
 			if ($password) {
 				$user->setPassword($password);
 			} else {
-				throw new \Exception("Password must be set.");
+				throw new \Exception(dgettext("authPlugin", "Password must be set."));
 			}
 		}
 		
@@ -161,7 +166,7 @@ class AuthRepository extends EntityRepository {
 
 		$user = $this->userExists($email);
 		if (!$user) {
-			throw new \Exception ("User does not exist.");
+			throw new \Exception (dgettext("authPlugin", "User does not exist."));
 		}
 		
 		if (!$user->hasPasswordSet()) {
@@ -170,7 +175,9 @@ class AuthRepository extends EntityRepository {
 			foreach($providers as $provider) {
 				$provStrings .= $provider->getOauthProvider() . ', ';
 			}
-			throw new \Exception("Your account has no password because you have used other login providers and not set a password. Login with one of $provStrings.");
+			throw new \Exception(
+					sprintf(dgettext("authPlugin", "Your account has no password because you have used other login providers and not set a password. Login with one of %s."), $provStrings)
+					);
 		}
 		
 		if (!$user->getForgotPasswordKey()) {
@@ -184,11 +191,11 @@ class AuthRepository extends EntityRepository {
 	
 	public function changePassword (UserAccount $u, $old, $new, $confirm) {
 		if ($u->hasPasswordSet() && !$u->isPasswordCorrect($old)){
-			throw new \Exception("Old password is incorrect.");
+			throw new \Exception(dgettext("authPlugin", "Old password is incorrect."));
 		}
 		
 		if ($new !== $confirm || !$new) {
-			throw new \Exception("The password confirmation was incorrect.");
+			throw new \Exception(dgettext("authPlugin", "The password confirmation was incorrect."));
 		}
 		
 		$u->setPassword($new);
@@ -207,7 +214,7 @@ class AuthRepository extends EntityRepository {
 	public function validateResetKey ($key) {
 		$user = $this->findOneByForgotPasswordKey($key);
 		if (!$user) {
-			throw new \Exception ("Could not validate the password reset key.");
+			throw new \Exception (dgettext("authPlugin", "Could not validate the password reset key."));
 		}
 		
 		
