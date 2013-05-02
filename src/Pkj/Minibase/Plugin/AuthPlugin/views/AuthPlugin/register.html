@@ -1,7 +1,7 @@
 {% extends "AuthPlugin/template.html" %}
 
 {% block content %}
-	<h2>{{"Register"|_d("authPlugin")}}</h2>
+	<h2>{{dgettext("authPlugin","Register")}}</h2>
 	
 	
 	{% if authMessage %}
@@ -11,12 +11,12 @@
 	<form action="{{"Pkj/Minibase/Plugin/AuthPlugin/AuthController.postRegister"|route()}}" method="post">
 		{{csrfTokenInput|raw}}
 		
-		<input type="text" name="username" placeholder="{{"Email"|_d("authPlugin")}}">
+		<input type="text" name="username" placeholder="{{dgettext("authPlugin", "Email")}}">
 		
-		<input type="password" name="password" placeholder="{{"Password"|_d("authPlugin")}}">
-		<input type="password" name="password_confirm" placeholder="{{"Confirm Password"|_d("authPlugin")}}">
+		<input type="password" name="password" placeholder="{{dgettext("authPlugin","Password")}}">
+		<input type="password" name="password_confirm" placeholder="{{dgettext("authPlugin","Confirm Password")}}">
 		
-		<button type="submit">{{"Register"|_d("authPlugin")}}</button>
+		<button type="submit">{{dgettext("authPlugin", "Register")}}</button>
 		
 	</form>
 	
