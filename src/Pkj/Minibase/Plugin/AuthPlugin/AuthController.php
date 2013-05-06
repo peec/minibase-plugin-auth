@@ -1,6 +1,8 @@
 <?php
 namespace Pkj\Minibase\Plugin\AuthPlugin;
 
+use Pkj\Minibase\Plugin\AuthPlugin\Models\UserAccount;
+
 use Minibase\Mvc\Controller;
 
 use Pkj\Minibase\Plugin\AuthPlugin\Annotation as Restrict;
@@ -9,6 +11,17 @@ use Pkj\Minibase\Plugin\AuthPlugin\Annotation as Restrict;
 class AuthController extends Controller {
 
 	private $plugin;
+	
+	
+	/**
+	 * Logs in a user, also regenerates the session ID.
+	 * @param UserAccount $user
+	 */
+	private function loginUser (UserAccount $user) {
+		// Security prevention
+		session_regenerate_id();
+		$_SESSION['userAccount'] = $user->getId();
+	}
 	
 	/**
 	 * Returns the AuthPlugin instance.
@@ -37,8 +50,7 @@ class AuthController extends Controller {
 		$user = $this->getPlugin()->getRepo()->login($username, $password);
 		
 		if ($user) {
-			$_SESSION['userAccount'] = $user->getId();
-			
+			$this->loginUser($user);
 			return $this->respond("redirect")
 				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.manage')->reverse())
 				->flash(array("success" => 
@@ -98,7 +110,8 @@ class AuthController extends Controller {
 			
 			$user = $this->getPlugin()->getRepo()->updateProvider('facebook', $userId, $userProfile['email']);
 
-			$_SESSION['userAccount'] = $user->getId();
+			$this->loginUser($user);
+			
 			return $this->respond("redirect")
 			->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.manage')->reverse());
 		} catch (\FacebookApiException $e) {
