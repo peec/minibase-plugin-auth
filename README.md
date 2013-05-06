@@ -40,6 +40,10 @@ Add the plugins like so in your `app.json` file.
 						"appId": "APP_ID",
 						"secret": "FACEBOOK_SECRET_KEY"
 					}
+				},
+				"api": {
+					"ensure_token": true,
+					"expire_timeout": "+100 days"
 				}
 			}
 		},
