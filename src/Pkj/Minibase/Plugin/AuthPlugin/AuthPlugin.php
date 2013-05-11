@@ -101,8 +101,8 @@ class AuthPlugin extends Plugin{
 	 * Gets the user id of the authenticated user, NULL if none.
 	 */
 	public function getAuthenticatedUser () {
-		if (isset($_SESSION['userAccount']) && $_SESSION['userAccount']) {
-			return $_SESSION['userAccount'];
+		if ($this->mb->session->has('userAccount')) {
+			return $this->mb->session->get('userAccount');
 		} elseif (isset($_GET['auth_token'])) {
 			return $this->getRepo()->findOneByAuthToken($_GET['auth_token']);
 		}else {

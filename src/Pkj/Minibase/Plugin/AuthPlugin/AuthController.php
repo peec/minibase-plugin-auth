@@ -19,8 +19,8 @@ class AuthController extends Controller {
 	 */
 	private function loginUser (UserAccount $user) {
 		// Security prevention
-		session_regenerate_id();
-		$_SESSION['userAccount'] = $user->getId();
+		$this->mb->session->migrate();
+		$this->mb->session->set('userAccount', $user->getId());
 	}
 	
 	/**
@@ -51,11 +51,9 @@ class AuthController extends Controller {
 		
 		if ($user) {
 			$this->loginUser($user);
+			$this->session->getFlashBag()->add('success', sprintf(dgettext("authPlugin", "Welcome %s."), $user->getUsername()));
 			return $this->respond("redirect")
-				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.manage')->reverse())
-				->flash(array("success" => 
-							sprintf(dgettext("authPlugin", "Welcome %s."), $user->getUsername()))
-						);
+				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.manage')->reverse());
 		} else {
 			return $this->respond("html")
 				->view("AuthPlugin/login.html", array("authMessage" => array('msg' => 
@@ -127,14 +125,13 @@ class AuthController extends Controller {
 	 * @Restrict\Authenticated
 	 */
 	public function logout () {
-		unset($_SESSION['userAccount']);
-		session_regenerate_id();
+		
+		$this->mb->session->remove('userAccount');
+		$this->mb->session->migrate();
+		$this->session->getFlashBag()->add('success', dgettext("authPlugin", "You are logged out. Welcome back."));
+		
 		return $this->respond("redirect")
-			->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.login')->reverse())
-			->flash(array("success" => 
-					dgettext("authPlugin", "You are logged out. Welcome back.")
-					
-					));
+			->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.login')->reverse());
 	}
 	
 	
@@ -163,11 +160,11 @@ class AuthController extends Controller {
 			$user = $this->getPlugin()->getRepo()->register($username, $password, $password_confirm);
 			
 			
+
+			$this->session->getFlashBag()->add('success', dgettext("authPlugin", 'Thank you for creating an account. You may login.'));
+			
 			return $this->respond("redirect")
-				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.login')->reverse())
-				->flash(array('success' => 
-						dgettext("authPlugin", 'Thank you for creating an account. You may login.')
-						));
+				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.login')->reverse());
 		} catch(\Exception $e) {
 			return $this->respond("html")
 				->view("AuthPlugin/register.html", array('authMessage' => array('msg' => 
@@ -195,11 +192,12 @@ class AuthController extends Controller {
 		
 		try{
 			$this->getPlugin()->getRepo()->changePassword($this->mb->currentUser, $old_password, $password, $password_confirm);
+			
+			$this->session->getFlashBag()->add('success', dgettext("authPlugin", 'Your password has been changed.'));
+			
 			return $this->respond("redirect")
-			->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.manage')->reverse())
-			->flash(array('success' => 
-					dgettext("authPlugin", 'Your password has been changed.')
-					));
+			->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.manage')->reverse());
+			
 		}catch (\Exception $e) {
 			
 			return $this->respond("html")
@@ -237,11 +235,10 @@ class AuthController extends Controller {
 			
 			$this->mb->mailer->send($message);
 			
+			$this->session->getFlashBag()->add('success', dgettext("authPlugin", 'Please check your email, we have sent instructions on how to reset your password.'));
+			
 			return $this->respond("redirect")
-				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.recoverAccount')->reverse())
-				->flash(array('success' => 
-						dgettext("authPlugin", 'Please check your email, we have sent instructions on how to reset your password.')
-						));
+				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.recoverAccount')->reverse());
 		} catch (\Exception $e) {
 			return $this->respond("html")
 				->view("AuthPlugin/recover_account.html", array('recoverMessage' => array('msg' => $e->getMessage())));
@@ -271,11 +268,10 @@ class AuthController extends Controller {
 						'user' => $user,
 						'resetPasswordPostLink' => $link));
 		} catch(\Exception $e) {
+			$this->session->getFlashBag()->add('success',dgettext("authPlugin", 'We could not validate the password-reset code. Please try again.'));
+			
 			return $this->respond("redirect")
-				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.recoverAccount')->reverse())
-				->flash(array('error' => 
-						dgettext("authPlugin", 'We could not validate the password-reset code. Please try again.')
-						));
+				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.recoverAccount')->reverse());
 		}
 		
 	}
@@ -294,11 +290,10 @@ class AuthController extends Controller {
 			// Change the password
 			$this->getPlugin()->getRepo()->changePassword($user, null, $password, $password_confirm);
 			
+			$this->session->getFlashBag()->add('success', dgettext("authPlugin", 'Your password has been reset, you may now login with your new password.'));
+			
 			return $this->respond("redirect")
-				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.login')->reverse())
-				->flash(array('success' => 
-						dgettext("authPlugin", 'Your password has been reset, you may now login with your new password.')
-						));
+				->to($this->call('Pkj/Minibase/Plugin/AuthPlugin/AuthController.login')->reverse());
 		} catch(\Exception $e) {
 			return $this->respond("html")
 			->view("AuthPlugin/reset_password.html", array('recoverMessage' => array('msg' => $e->getMessage())));
